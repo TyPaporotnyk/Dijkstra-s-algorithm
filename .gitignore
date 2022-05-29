@@ -1,0 +1,7 @@
+/.idea/
+
+# Object files
+/src/*.o
+
+# Executable file
+Dijkstra-s-algorithm
