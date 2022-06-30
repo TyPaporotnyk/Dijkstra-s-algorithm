@@ -1,30 +1,41 @@
-#include <SFML/Graphics.h>
+#include "dijkstra.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
 int main()
 {
-    sfVideoMode mode = {800, 600, 32};
-    sfRenderWindow* window;
-    sfEvent event;
+    system("clear");
+    printf("Введіть кількість вершин графа\n");
 
-/* Create the main window */
-    window = sfRenderWindow_create(mode, "CSFML window", sfResize | sfClose, NULL);
-    if (!window)
-        return EXIT_FAILURE;
+    printf("  --> ");
+    int size;
+    scanf("%d", &size);
 
-    while (sfRenderWindow_isOpen(window))
-    {
-        while (sfRenderWindow_pollEvent(window, &event))
-        {
-            if (event.type == sfEvtClosed)
-                sfRenderWindow_close(window);
-        }
+    printf("\n");
 
-        sfRenderWindow_clear(window, sfBlack);
-        sfRenderWindow_display(window);
-    }
+    printf("Оберіть тип вводу графу\n");
+    printf("1. Заданням матриці\n");
+    printf("2. Заданням весів сусідів графу\n");
 
-    sfRenderWindow_destroy(window);
-    return EXIT_SUCCESS;
+    printf("  --> ");
+    int choose;
+    scanf("%d", &choose);
+    printf("\n\n");
+
+
+
+    dijkstra d1;
+
+    dijkstra_init(&d1, size, choose);
+
+    printf("Введіть початкову вершину\n");
+
+    printf("  --> ");
+    int id;
+    scanf("%d", &id);
+    printf("\n");
+    dijkstra_calculate(&d1, size, id-1, 5);
+
+  return 0;
 }

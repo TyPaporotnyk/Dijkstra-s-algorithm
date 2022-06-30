@@ -1,18 +1,45 @@
-RM	=	rm -f
+# project name (generate executable with this name)
+TARGET   = main
 
-SRC	=	src/main.c \
+CC       = gcc
+# compiling flags here
+CFLAGS   = -std=c99 -Wall -I.
 
-OBJS	=	$(SRC:.c=.o)
+LINKER   = gcc
+# linking flags here
+LFLAGS   = -Wall -I. -lm
 
-NAME	=	Dijkstra-s-algorithm
+# change these to proper directories where each file should be
+SRCDIR   = src
+OBJDIR   = obj
+BINDIR   = bin
 
-all: $(OBJS)
-	gcc $(OBJS) -l csfml-graphics -l csfml-audio -o $(NAME) -g3
+SOURCES  := $(wildcard $(SRCDIR)/*.c)
+INCLUDES := $(wildcard $(SRCDIR)/*.h)
+OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+rm       = rm -f
 
+
+$(BINDIR)/$(TARGET): $(OBJECTS)
+	@$(LINKER) $(OBJECTS) $(LFLAGS) -o $@
+	@echo "Linking complete!"
+
+$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "Compiled "$<" successfully!"
+
+.PHONY: clean
 clean:
-	$(RM) $(OBJS)
+	@$(rm) $(OBJECTS)
+	@echo "Cleanup complete!"
 
-fclean: clean
-	$(RM) $(NAME)
+.PHONY: folders
+folders:
+	@mkdir -p $(OBJDIR)
+	@mkdir -p $(BINDIR)
+	@echo "Folders created!"
 
-re: fclean all
+.PHONY: remove
+remove: clean
+	@$(rm) $(BINDIR)/$(TARGET)
+	@echo "Executable removed!"

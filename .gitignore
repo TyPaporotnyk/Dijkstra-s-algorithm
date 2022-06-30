@@ -1,7 +1,14 @@
 /.idea/
+/.vscode/
+/cmake-build-debug/
+/obj/
+/bin/
 
 # Object files
-/src/*.o
+*.o
+
+# Prerequisites
+*.d
 
 # Executable file
-Dijkstra-s-algorithm
+main
